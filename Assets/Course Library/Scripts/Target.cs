@@ -27,6 +27,16 @@ public class Target : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Debug.Log("Mouse was clicked");
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.transform == transform)   // Garante que só destrói este objeto
+                {
+                    Destroy(gameObject);
+                }
+            }
         }
     }
 
@@ -43,5 +53,13 @@ public class Target : MonoBehaviour
     Vector3 RandomSpawnPos()
     {
         return new Vector3(Random.Range(-xRange, xRange), ySpawnPos, 0);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("DestroyZone"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
