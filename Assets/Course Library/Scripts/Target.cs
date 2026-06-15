@@ -26,7 +26,6 @@ public class Target : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Debug.Log("Mouse was clicked");
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
 
