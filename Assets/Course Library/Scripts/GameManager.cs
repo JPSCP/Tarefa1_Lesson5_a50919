@@ -20,10 +20,15 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+    }
+    public void StartGame(int difficulty)
+    {
         isGameActive = true;
-        StartCoroutine(SpawnTarget());
         score = 0;
-        UpdateScore(0);
+        spawnRate = 1.0f;           
+        StartCoroutine(SpawnTarget());
+        UpdateScore(0);   
     }
 
     IEnumerator SpawnTarget()
