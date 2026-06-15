@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI gameOverText;
     public bool isGameActive;
     public Button restartButton;
+    public GameObject titleScreen;
 
     private float spawnRate = 1.0f;
     private int score;
@@ -22,24 +23,20 @@ public class GameManager : MonoBehaviour
     {
 
     }
-    public void StartGame(int difficulty)
+
+    void Update()
     {
-        isGameActive = true;
-        score = 0;
-        spawnRate = 1.0f;           
-        StartCoroutine(SpawnTarget());
-        UpdateScore(0);   
+
     }
 
     IEnumerator SpawnTarget()
-    { 
-        while(isGameActive)
+    {
+        while (isGameActive)
         {
             yield return new WaitForSeconds(spawnRate);
-            int indesx = Random.Range(0, targets.Count);
-            Instantiate(targets[indesx]);
+            int index = Random.Range(0, targets.Count);
+            Instantiate(targets[index]);
         }
-
     }
 
     public void UpdateScore(int scoreToAdd)
@@ -58,5 +55,15 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void StartGame(int difficulty)
+    {
+        isGameActive = true;
+        score = 0;
+        StartCoroutine(SpawnTarget());
+        UpdateScore(0);
+        titleScreen.gameObject.SetActive(false);
+        spawnRate /= difficulty;
     }
 }
